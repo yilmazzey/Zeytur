@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="zeyturModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TBLLoginScreen">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rol" Type="nvarchar" MaxLength="50" />
+          <Property Name="adSoyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="sifre" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TBLPassanger">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="adSoyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="telNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="tcNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="cinsiyet" Type="nvarchar" MaxLength="50" />
+          <Property Name="odenenUcret" Type="int" />
+          <Property Name="payment_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TBLPayment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kartIsim" Type="nvarchar" MaxLength="50" />
+          <Property Name="kartNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="skt" Type="nvarchar" MaxLength="50" />
+          <Property Name="cvv" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TBLTrip_Info">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kalkıs" Type="nvarchar" MaxLength="50" />
+          <Property Name="inis" Type="nvarchar" MaxLength="50" />
+          <Property Name="tarih" Type="nvarchar" MaxLength="50" />
+          <Property Name="saat" Type="nvarchar" MaxLength="50" />
+          <Property Name="kapıNo" Type="int" Nullable="false" />
+          <Property Name="koltukNo" Type="int" />
+          <Property Name="pass_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_TBLPassanger_TBLPayment">
+          <End Role="TBLPayment" Type="Self.TBLPayment" Multiplicity="1" />
+          <End Role="TBLPassanger" Type="Self.TBLPassanger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLPayment">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TBLPassanger">
+              <PropertyRef Name="payment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLTrip_Info_TBLPassanger">
+          <End Role="TBLPassanger" Type="Self.TBLPassanger" Multiplicity="1" />
+          <End Role="TBLTrip_Info" Type="Self.TBLTrip_Info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLPassanger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TBLTrip_Info">
+              <PropertyRef Name="pass_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="zeyturModelStoreContainer">
+          <EntitySet Name="TBLLoginScreen" EntityType="Self.TBLLoginScreen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBLPassanger" EntityType="Self.TBLPassanger" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBLPayment" EntityType="Self.TBLPayment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBLTrip_Info" EntityType="Self.TBLTrip_Info" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TBLPassanger_TBLPayment" Association="Self.FK_TBLPassanger_TBLPayment">
+            <End Role="TBLPayment" EntitySet="TBLPayment" />
+            <End Role="TBLPassanger" EntitySet="TBLPassanger" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLTrip_Info_TBLPassanger" Association="Self.FK_TBLTrip_Info_TBLPassanger">
+            <End Role="TBLPassanger" EntitySet="TBLPassanger" />
+            <End Role="TBLTrip_Info" EntitySet="TBLTrip_Info" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="zeyturModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="zeyturEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TBLLoginScreen" EntityType="zeyturModel.TBLLoginScreen" />
+          <EntitySet Name="TBLPassanger" EntityType="zeyturModel.TBLPassanger" />
+          <EntitySet Name="TBLPayment" EntityType="zeyturModel.TBLPayment" />
+          <EntitySet Name="TBLTrip_Info" EntityType="zeyturModel.TBLTrip_Info" />
+          <AssociationSet Name="FK_TBLPassanger_TBLPayment" Association="zeyturModel.FK_TBLPassanger_TBLPayment">
+            <End Role="TBLPayment" EntitySet="TBLPayment" />
+            <End Role="TBLPassanger" EntitySet="TBLPassanger" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLTrip_Info_TBLPassanger" Association="zeyturModel.FK_TBLTrip_Info_TBLPassanger">
+            <End Role="TBLPassanger" EntitySet="TBLPassanger" />
+            <End Role="TBLTrip_Info" EntitySet="TBLTrip_Info" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="TBLLoginScreen">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="adSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TBLPassanger">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="adSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="telNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tcNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cinsiyet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="odenenUcret" Type="Int32" />
+          <Property Name="payment_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TBLPayment" Relationship="zeyturModel.FK_TBLPassanger_TBLPayment" FromRole="TBLPassanger" ToRole="TBLPayment" />
+          <NavigationProperty Name="TBLTrip_Info" Relationship="zeyturModel.FK_TBLTrip_Info_TBLPassanger" FromRole="TBLPassanger" ToRole="TBLTrip_Info" />
+        </EntityType>
+        <EntityType Name="TBLPayment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kartIsim" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kartNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="skt" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cvv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TBLPassanger" Relationship="zeyturModel.FK_TBLPassanger_TBLPayment" FromRole="TBLPayment" ToRole="TBLPassanger" />
+        </EntityType>
+        <EntityType Name="TBLTrip_Info">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kalkıs" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="inis" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tarih" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="saat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kapıNo" Type="Int32" Nullable="false" />
+          <Property Name="koltukNo" Type="Int32" />
+          <Property Name="pass_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TBLPassanger" Relationship="zeyturModel.FK_TBLTrip_Info_TBLPassanger" FromRole="TBLTrip_Info" ToRole="TBLPassanger" />
+        </EntityType>
+        <Association Name="FK_TBLPassanger_TBLPayment">
+          <End Type="zeyturModel.TBLPayment" Role="TBLPayment" Multiplicity="1" />
+          <End Type="zeyturModel.TBLPassanger" Role="TBLPassanger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLPayment">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TBLPassanger">
+              <PropertyRef Name="payment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLTrip_Info_TBLPassanger">
+          <End Type="zeyturModel.TBLPassanger" Role="TBLPassanger" Multiplicity="1" />
+          <End Type="zeyturModel.TBLTrip_Info" Role="TBLTrip_Info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLPassanger">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TBLTrip_Info">
+              <PropertyRef Name="pass_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="zeyturModelStoreContainer" CdmEntityContainer="zeyturEntities">
+          <EntitySetMapping Name="TBLLoginScreen">
+            <EntityTypeMapping TypeName="zeyturModel.TBLLoginScreen">
+              <MappingFragment StoreEntitySet="TBLLoginScreen">
+                <ScalarProperty Name="sifre" ColumnName="sifre" />
+                <ScalarProperty Name="adSoyad" ColumnName="adSoyad" />
+                <ScalarProperty Name="rol" ColumnName="rol" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBLPassanger">
+            <EntityTypeMapping TypeName="zeyturModel.TBLPassanger">
+              <MappingFragment StoreEntitySet="TBLPassanger">
+                <ScalarProperty Name="payment_id" ColumnName="payment_id" />
+                <ScalarProperty Name="odenenUcret" ColumnName="odenenUcret" />
+                <ScalarProperty Name="cinsiyet" ColumnName="cinsiyet" />
+                <ScalarProperty Name="tcNo" ColumnName="tcNo" />
+                <ScalarProperty Name="telNo" ColumnName="telNo" />
+                <ScalarProperty Name="adSoyad" ColumnName="adSoyad" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBLPayment">
+            <EntityTypeMapping TypeName="zeyturModel.TBLPayment">
+              <MappingFragment StoreEntitySet="TBLPayment">
+                <ScalarProperty Name="cvv" ColumnName="cvv" />
+                <ScalarProperty Name="skt" ColumnName="skt" />
+                <ScalarProperty Name="kartNo" ColumnName="kartNo" />
+                <ScalarProperty Name="kartIsim" ColumnName="kartIsim" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBLTrip_Info">
+            <EntityTypeMapping TypeName="zeyturModel.TBLTrip_Info">
+              <MappingFragment StoreEntitySet="TBLTrip_Info">
+                <ScalarProperty Name="pass_id" ColumnName="pass_id" />
+                <ScalarProperty Name="koltukNo" ColumnName="koltukNo" />
+                <ScalarProperty Name="kapıNo" ColumnName="kapıNo" />
+                <ScalarProperty Name="saat" ColumnName="saat" />
+                <ScalarProperty Name="tarih" ColumnName="tarih" />
+                <ScalarProperty Name="inis" ColumnName="inis" />
+                <ScalarProperty Name="kalkıs" ColumnName="kalkıs" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
